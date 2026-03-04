@@ -16,11 +16,10 @@ export default function SharedDashboardLayout() {
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+
     React.useEffect(() => {
-        // Switch to light mode for dashboard
         document.documentElement.classList.remove('dark');
         return () => {
-            // Switch back to dark mode when leaving dashboard
             document.documentElement.classList.add('dark');
         };
     }, []);
@@ -97,7 +96,7 @@ export default function SharedDashboardLayout() {
                         <div>
                             <h1 className="font-bold text-lg tracking-tight text-gray-900">{user?.year} Panel</h1>
 
-                            <span className="font-bold text-white text-lg">{user.year}</span>
+                            {/* <span className="font-bold text-gray-900 text-lg">{user.year}</span> */}
                         </div>
                     </div>
 

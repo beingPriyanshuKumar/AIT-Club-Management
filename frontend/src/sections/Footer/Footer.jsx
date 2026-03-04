@@ -29,12 +29,12 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="mb-4">
           <CurvedLoop 
-            marqueeText="Made  ✦  With  ✦ ❤️ ✦ By ✦ GDG ✦ X ✦ "
+            marqueeText="Made With ❤️ By GDG X ✦ "
             speed={2}
-            curveAmount={40}
+            curveAmount={5}
             direction="left"
             interactive
-            className="text-white fill-white"
+            className="text-white fill-white font-mono"
           />
         </div>
         <div className="mb-12">

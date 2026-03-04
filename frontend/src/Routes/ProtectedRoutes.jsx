@@ -1,6 +1,6 @@
 import React from "react";
 import TePanel from "@/pages/Profile/Te profile/TePanel";
-import FePanel from "@/pages/Profile/FePanel";
+import FePanel from "@/pages/Profile/FE Profile/FePanel";
 import SePanel from "@/pages/Profile/SE profile/SePanel";
 
 

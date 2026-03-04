@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { useProfile } from './ProfileContext';
 import { Mail, Phone, Award, MessageCircle, Send, Edit2, Check, X, Camera, Save } from 'lucide-react';
+import { useProfile } from './ProfileContext';
 import { useAuth } from '@/context/AuthContext';
 
 const SharedProfile = () => {
     const { profile } = useProfile();
     const { user, updateUserInfo } = useAuth();
-    const [saveStatus, setSaveStatus] = useState(null); // null | 'saving' | 'success' | 'error'
+    const [saveStatus, setSaveStatus] = useState(null);
+
     const [saveError, setSaveError] = useState('');
     
     const [isEditing, setIsEditing] = useState(false);
