@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ClubCard from './ClubCard'
-import ApplicationForm from '../ApplicationForm'
 import { ArrowLeft } from 'lucide-react'
 import './club.css'
 // import { useView } from '../../context/ViewContext';

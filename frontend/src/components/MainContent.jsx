@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import '../styles/site.css'
 import Home from './Home/Home'
-import AboutUs from '../sections/Aboutus/Aboutus'
-import Footer from '@/sections/Footer/Footer'
 import { Navbar } from './Navbar/Navbar'
 import SideBar from './Navbar/SideBar'
 
@@ -23,8 +21,6 @@ export default function MainContent(){
         isSidebarOpen={isSidebarOpen}
       />
       <Home />
-      <AboutUs />
-      <Footer/>
     </main>
   )
 }
