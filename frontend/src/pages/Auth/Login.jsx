@@ -28,6 +28,11 @@ const Login = () => {
         pending: "Requesting...",
         success: {
           render({ data }) {
+            if (selectedClub) {
+              localStorage.setItem("enteredClub", JSON.stringify(selectedClub));
+            } else {
+              localStorage.removeItem("enteredClub");
+            }
             if (!data.user || !data.user.year) {
               console.error("Login: Missing user year in data", data);
               setTimeout(() => navigate("/"), 2000);
@@ -48,6 +53,11 @@ const Login = () => {
 
   const handleGoogleSuccess = (result) => {
     const user = result.user;
+    if (selectedClub) {
+      localStorage.setItem("enteredClub", JSON.stringify(selectedClub));
+    } else {
+      localStorage.removeItem("enteredClub");
+    }
     toast.success("Logged in with Google! 👌");
     setTimeout(() => {
       if (user?.year) {
@@ -160,7 +170,7 @@ const Login = () => {
           <p className="text-sm text-slate-400">
             Don't have an account?{" "}
             <button
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/signup", { state: location.state })}
               className="text-white hover:text-gray-300 font-medium transition"
             >
               Register

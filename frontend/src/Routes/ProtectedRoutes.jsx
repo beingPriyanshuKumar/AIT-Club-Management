@@ -8,9 +8,7 @@ import ResponseDashboard from "@/pages/response/Dashboard";
 import SubmissionDetails from "@/pages/response/SubmissionDetails";
 import { ProfileProvider } from "@/pages/Profile/Shared/ProfileContext";
 import SharedDashboardLayout from "@/pages/Profile/Shared/DashboardLayout";
-import { profileData, membersData, tasksData, messagesData, notificationsData } from "@/pages/Profile/organisations/Admin/mockData";
-
-const adminData = { profile: profileData, members: membersData, tasks: tasksData, messages: messagesData, notifications: notificationsData };
+const adminData = { profile: { clubs: [] }, members: [], tasks: [], messages: [], notifications: [] };
 
 const AdminRoute = ({ children }) => (
   <ProfileProvider initialData={adminData} role="Admin">

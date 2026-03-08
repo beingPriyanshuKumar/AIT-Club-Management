@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 // import { useView } from '@/context/ViewContext';
 import { ProfileProvider } from '../../Shared/ProfileContext';
 import SharedDashboardLayout from '../../Shared/DashboardLayout';
-import { profileData, membersData, tasksData, messagesData, notificationsData } from './mockData';
 
 const MemberPanel = () => {
     const location = useLocation();
@@ -14,18 +13,23 @@ const MemberPanel = () => {
     //     setCurrentView('se-dashboard');
     //     localStorage.setItem('se_dashboard_active', 'true');
     // }, [setCurrentView]);
-    const selectedClub = location.state?.club;
+    const selectedClub = location.state?.club || (() => {
+        try {
+            const saved = localStorage.getItem("enteredClub");
+            return saved ? JSON.parse(saved) : null;
+        } catch(e) { return null; }
+    })();
 
     const clubs = selectedClub
         ? [{ id: selectedClub.abbr, name: selectedClub.name, abbr: selectedClub.abbr, logo: selectedClub.img, role: 'Member' }]
-        : profileData.clubs;
+        : [];
 
     const initialData = {
-        profile: { ...profileData, clubs },
-        members: membersData,
-        tasks: tasksData,
-        messages: messagesData,
-        notifications: notificationsData
+        profile: { clubs },
+        members: [],
+        tasks: [],
+        messages: [],
+        notifications: []
     };
 
     return (

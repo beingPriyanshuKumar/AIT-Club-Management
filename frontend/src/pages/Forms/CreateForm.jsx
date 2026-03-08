@@ -98,6 +98,17 @@ export default function CreateForm({ onSuccess, onCancel, initialData }) {
                 }),
             };
 
+            try {
+                const saved = localStorage.getItem("enteredClub");
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    const activeClubId = parsed.id || parsed.abbr;
+                    if (activeClubId) body.orgId = activeClubId;
+                }
+            } catch (e) {
+                console.error("Failed to append orgId", e);
+            }
+
             const url = isEdit
                 ? `${API}/api/forms/edit-form`
                 : `${API}/api/forms/create-form`;

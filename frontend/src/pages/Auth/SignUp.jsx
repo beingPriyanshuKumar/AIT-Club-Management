@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
@@ -13,10 +13,19 @@ const YEARS = [
 ];
 
 // ─── Google Profile Setup Step ───────────────────────────────────
-const GoogleProfileSetup = ({ onSubmit, loading }) => {
+const GoogleProfileSetup = ({ onSubmit, loading ,signupRole }) => {
   const [setupName, setSetupName] = useState("");
   const [callSign, setCallSign] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedYear, setSelectedYear] = useState(signupRole === "Applicant" ? "Applicant" : "");
+
+  let availableYears = [
+    { label: "Applicant" },
+    { label: "Member" },
+    { label: "Admin" },
+  ];
+
+  if (signupRole === "Applicant") availableYears = [{ label: "Applicant" }];
+  if (signupRole === "Organisation") availableYears = [{ label: "Member" }, { label: "Admin" }];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,11 +85,11 @@ const GoogleProfileSetup = ({ onSubmit, loading }) => {
           Academic Year
         </label>
         <div className="grid grid-cols-3 gap-2">
-          {YEARS.map(({ label }) => (
+          {availableYears.map(({ label }) => (
             <button
               key={label}
               type="button"
-              disabled={loading}
+              disabled={loading || signupRole === "Applicant"}
               onClick={() => setSelectedYear(label)}
               className={`
                 relative rounded-xl border p-2
@@ -115,10 +124,13 @@ const GoogleProfileSetup = ({ onSubmit, loading }) => {
 
 // ─── Main SignUp Component ───────────────────────────────────────
 const SignUp = () => {
+  const location = useLocation();
+  const signupRole = location.state?.role || "";
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(signupRole === "Applicant" ? "Applicant" : "");
 
   // For the Google → profile setup flow
   const [step, setStep] = useState("form"); // "form" | "profile-setup"
@@ -220,7 +232,7 @@ const SignUp = () => {
         {step === "profile-setup" ? (
           // ── Google Profile Setup Screen ──
           <div className="pt-2">
-            <GoogleProfileSetup onSubmit={handleProfileSetup} loading={saving} />
+            <GoogleProfileSetup onSubmit={handleProfileSetup} loading={saving} signupRole={signupRole} />
           </div>
         ) : (
           // ── Sign-up Form ──
@@ -308,13 +320,18 @@ const SignUp = () => {
                   className="w-full mt-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition-all [&>option]:text-black"
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
+                  disabled={signupRole === "Applicant"}
                 >
                   <option value="" disabled>
                     Select year
                   </option>
-                  <option value="Applicant">Applicant</option>
-                  <option value="Member">Member</option>
-                  <option value="Admin">Admin</option>
+                  {signupRole !== "Organisation" && <option value="Applicant">Applicant</option>}
+                  {signupRole !== "Applicant" && (
+                    <>
+                      <option value="Member">Member</option>
+                      <option value="Admin">Admin</option>
+                    </>
+                  )}
                 </select>
               </div>
 

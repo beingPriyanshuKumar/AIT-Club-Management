@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 // import { useView } from '../../../context/ViewContext';
+import { useLocation } from 'react-router-dom';
 
 const ProfileContext = createContext();
 
@@ -12,12 +13,13 @@ export const useProfile = () => {
 };
 
 export const ProfileProvider = ({ children, initialData, role }) => {
+    const location = useLocation();
     const [profile, setProfile] = useState(initialData.profile);
     const [members, setMembers] = useState(initialData.members);
     const [tasks, setTasks] = useState(initialData.tasks);
     const [messages, setMessages] = useState(initialData.messages);
     const [notifications, setNotifications] = useState(initialData.notifications);
-    const [activeTab, setActiveTab] = useState('overview');
+    const [activeTab, setActiveTab] = useState(location.state?.activeTab || 'overview');
     const [activeClub, setActiveClub] = useState(profile.clubs?.[0] || null);
     // const { setCurrentView } = useView();
 
@@ -36,7 +38,7 @@ export const ProfileProvider = ({ children, initialData, role }) => {
         }
     };
 
-    const unreadMessagesCount = 3;
+    const unreadMessagesCount = 0;
     const unreadNotificationsCount = notifications.filter(n => !n.isRead).length;
     const pendingTasksCount = clubTasks.filter(t => t.status !== 'Completed').length;
 
